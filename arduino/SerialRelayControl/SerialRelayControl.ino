@@ -2,7 +2,7 @@ const int sol0Pin = 11;
 const int sol1Pin = 12;
 const int sol2Pin = 13;
 
-int keepTime = 300;
+long lastSerialCommand = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -26,19 +26,17 @@ void updateSolenoids(int control) {
 }
 
 void loop() {
-  int timeMult = 1;
-
   while (Serial.available() > 0) {
-    int data = Serial.read();
-    timeMult = data & 0xF;
-    int control = (data & 0xF0) >> 4;
-    updateSolenoids(control);
-    Serial.write(0);
+    int control = Serial.read();
+    Serial.write(control);
     Serial.flush();
+    if (Serial.available() == 0)
+      updateSolenoids(control);
+    lastSerialCommand = millis();
   }
 
-  delay(keepTime);
-
-  if (Serial.available() == 0)
+  if (millis() - lastSerialCommand > 800)
     resetAll();
+
+  delay(300);
 }
