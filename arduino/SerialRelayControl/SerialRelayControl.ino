@@ -13,16 +13,21 @@ void setup() {
 }
 
 void resetAll() {
-  digitalWrite(sol0Pin, LOW);
-  digitalWrite(sol1Pin, LOW);
-  digitalWrite(sol2Pin, LOW);
+  // REVERSE LOGIC
+  digitalWrite(sol0Pin, HIGH);
+  digitalWrite(sol1Pin, HIGH);
+  digitalWrite(sol2Pin, HIGH);
 }
 
 // control: each bit enables or disables the solenoid outputs
 void updateSolenoids(int control) {
-  digitalWrite(sol0Pin, control & 0x1 ? HIGH : LOW);
-  digitalWrite(sol1Pin, control & 0x2 ? HIGH : LOW);
-  digitalWrite(sol2Pin, control & 0x4 ? HIGH : LOW);
+  // relays use inverse logic, so we *enable* them with LOW and
+  // disable with HIGH, leaving the interrupted wire plugged on
+  // "normally closed" to prevent flooding if something goes
+  // wrong
+  digitalWrite(sol0Pin, control & 0x1 ? LOW : HIGH);
+  digitalWrite(sol1Pin, control & 0x2 ? LOW : HIGH);
+  digitalWrite(sol2Pin, control & 0x4 ? LOW : HIGH);
 }
 
 void loop() {
