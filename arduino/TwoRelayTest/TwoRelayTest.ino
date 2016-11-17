@@ -11,7 +11,13 @@ void delayPreempt(unsigned long ms) {
   delay(ms);
 }
 
+void resetRelays() {
+  digitalWrite(sol0Pin, HIGH);
+  digitalWrite(sol1Pin, HIGH);
+}
+
 void loop() {
+  resetRelays();
   // wait 30 seconds before doing anything
   delayPreempt(30000L);
 
