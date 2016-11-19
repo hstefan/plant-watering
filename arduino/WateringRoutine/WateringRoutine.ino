@@ -1,15 +1,22 @@
+#include <avr/wdt.h>
+
 const int sol0Pin = 13;
 const int sol1Pin = 12;
 
 void setup() {
   pinMode(sol0Pin, OUTPUT);
   pinMode(sol1Pin, OUTPUT);
+
   resetRelays();
+
+  // configures watchdog with one second timeout
+  wdt_enable(WDTO_1S);
 }
 
-void delayPreempt(unsigned long ms) {
-  // for now this is just a wrapper for "delay"
-  delay(ms);
+void safeDelay(unsigned long ms) {
+  const unsigned long start = millis();
+  while (millis() - start < ms)
+    wdt_reset();
 }
 
 void resetRelays() {
@@ -23,28 +30,28 @@ void resetRelays() {
  * repeats.
  */
 void loop() {
-  unsigned long start = millis();
+  const unsigned long start = millis();
 
   // wait 30 seconds before doing anything
-  delayPreempt(30000L);
+  safeDelay(30000L);
 
   // enables first valve
   digitalWrite(sol0Pin, LOW);
   // waits 2 minutes before closing the first valve
-  delayPreempt(120000L);
+  safeDelay(120000L);
   // disables first valve
   digitalWrite(sol0Pin, HIGH);
 
   // waits 500 ms
-  delayPreempt(500L);
+  safeDelay(500L);
 
   // enables second valve
   digitalWrite(sol1Pin, LOW);
   // waits 45 seconds before closing the first valve
-  delayPreempt(45000L);
+  safeDelay(45000L);
   // disables second valve
   digitalWrite(sol1Pin, HIGH);
 
   // waits for 12 hours
-  delayPreempt(43200000L - (millis() - start);
+  safeDelay(43200000L - (millis() - start));
 }
