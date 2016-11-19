@@ -40,8 +40,8 @@ void loop() {
 
   // enables second valve
   digitalWrite(sol1Pin, LOW);
-  // waits 2 minutes before closing the first valve
-  delayPreempt(1200000L);
+  // waits 45 seconds before closing the first valve
+  delayPreempt(45000L);
   // disables second valve
   digitalWrite(sol1Pin, HIGH);
 
