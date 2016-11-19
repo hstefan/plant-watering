@@ -1,11 +1,11 @@
 #include <avr/wdt.h>
 
-const int sol0Pin = 13;
-const int sol1Pin = 12;
+#define SOL0PIN 13
+#define SOL1PIN 12
 
 void setup() {
-  pinMode(sol0Pin, OUTPUT);
-  pinMode(sol1Pin, OUTPUT);
+  pinMode(SOL0PIN, OUTPUT);
+  pinMode(SOL1PIN, OUTPUT);
 
   resetRelays();
 
@@ -20,8 +20,8 @@ void safeDelay(unsigned long ms) {
 }
 
 void resetRelays() {
-  digitalWrite(sol0Pin, HIGH);
-  digitalWrite(sol1Pin, HIGH);
+  digitalWrite(SOL0PIN, HIGH);
+  digitalWrite(SOL1PIN, HIGH);
 }
 
 /*
@@ -36,21 +36,21 @@ void loop() {
   safeDelay(30000L);
 
   // enables first valve
-  digitalWrite(sol0Pin, LOW);
+  digitalWrite(SOL0PIN, LOW);
   // waits 2 minutes before closing the first valve
   safeDelay(120000L);
   // disables first valve
-  digitalWrite(sol0Pin, HIGH);
+  digitalWrite(SOL0PIN, HIGH);
 
   // waits 500 ms
   safeDelay(500L);
 
   // enables second valve
-  digitalWrite(sol1Pin, LOW);
+  digitalWrite(SOL1PIN, LOW);
   // waits 45 seconds before closing the first valve
   safeDelay(45000L);
   // disables second valve
-  digitalWrite(sol1Pin, HIGH);
+  digitalWrite(SOL1PIN, HIGH);
 
   // waits for 12 hours
   safeDelay(43200000L - (millis() - start));
