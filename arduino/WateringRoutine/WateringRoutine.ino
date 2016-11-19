@@ -23,6 +23,8 @@ void resetRelays() {
  * repeats.
  */
 void loop() {
+  unsigned long start = millis();
+
   // wait 30 seconds before doing anything
   delayPreempt(30000L);
 
@@ -44,5 +46,5 @@ void loop() {
   digitalWrite(sol1Pin, HIGH);
 
   // waits for 12 hours
-  delayPreempt(43200000L);
+  delayPreempt(43200000L - (millis() - start);
 }
