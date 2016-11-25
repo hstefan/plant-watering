@@ -49,7 +49,6 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except Exception as ex:
+    except:
         print('Exception caught, quitting.')
-        print(ex)
         reset()
