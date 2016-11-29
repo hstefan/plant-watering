@@ -22,7 +22,6 @@ def init():
 
 def reset():
     logging.info('Resetting GPIO level.')
-    wp.wiringPiSetup()
     wp.digitalWrite(RELAY0_PIN, wp.HIGH)
     wp.digitalWrite(RELAY1_PIN, wp.HIGH)
 
