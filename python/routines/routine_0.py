@@ -11,7 +11,7 @@ RELAY1_PIN = 1  # BCM GPIO 18
 
 
 def init():
-    logging.basicConfig(filename='watering.log', level=logging.INFO,
+    logging.basicConfig(filename='/var/log/watering.log', level=logging.INFO,
                         format='%(asctime)s %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p')
     logging.info('Initializing GPIO.')
